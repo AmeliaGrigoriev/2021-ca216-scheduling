@@ -1,58 +1,45 @@
-/**
- * 
- * the work was divided evenly upon both of us 50/50
- * Driver.c
- *
- * Schedule is in the format
- *
- *  [name] [priority] [CPU burst]
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include "schedulers.h"
+#include "cpu.h"
 #include "task.h"
 #include "list.h"
-#include "schedulers.h"
+#include "driver.c"
 
-#define SIZE    100
 
-int main(int argc, char *argv[])
+struct node *head;
+head = NULL;
+
+struct node 
 {
-    FILE *in;
-    char *temp;
-    char task[SIZE];
+    Task *task;
+    struct node *next;
+};
 
-    char *name;
-    int priority;
-    int burst;
+void add(char *name, int priority, int burst);
 
-    in = fopen(argv[1],"r");
-    
-    while (fgets(task,SIZE,in) != NULL) {
-        temp = strdup(task);
-        name = strsep(&temp,",");
-        priority = atoi(strsep(&temp,","));
-        burst = atoi(strsep(&temp,","));
-
-        // add the task to the scheduler's list of tasks
-        add(name,priority,burst);
-
-        free(temp);
+static void schedule(struct node *head)
+{
+    struct node* previous = NULL;
+    struct node* current = &head;
+    struct node* next = NULL;
+    if (current = NULL)
+    {
+        return NULL;
     }
-
-    fclose(in);
-
-    // invoke the scheduler
-    schedule();
-
-    return 0;
+    else{
+        next = current->next;
+        current->next = previous;
+        previous = current;
+        current = next;
+    }
+    head = previous;
 }
-
 /*References:
 
 We used code from this website to help understand linked lists a bit better for this assignment(https://www.geeksforgeeks.org/linked-list-set-1-introduction/)
+We used this website to help with this sjf algorithm for this assignment(https://www.geeksforgeeks.org/reverse-a-linked-list/)
 
 
 STATEMENT OF NON-PLAGIARISM

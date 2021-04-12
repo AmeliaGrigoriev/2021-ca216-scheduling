@@ -1,33 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "schedulers.h"
+#include "cpu.h"
 #include "task.h"
 #include "list.h"
-#include "cpu.h"
-#define MIN_PRIORITY 1
-#define MAX_PRIORITY 10
-struct node {
+
+struct node *head;
+head = NULL;
+
+struct node 
+{
     Task *task;
     struct node *next;
-};
+}
+
+
 struct node *head;
 head = NULL;
 
 // add a task to the list 
 void add(char *name, int priority, int burst)
-{
-    Task task;
-    struct Task *task = (Task*) malloc(sizeof(Task));
-    task.name = name;
-    task.priority = priority;
-    task.burst = burst;
-
-    insert(&head, &task);
-}
 
 
 // invoke the scheduler
 
-static void fcfs(struct node *head)
+static void schedule(struct node *head)
 {
     struct node* previous = NULL;
     struct node* current = &head;
@@ -44,12 +41,10 @@ static void fcfs(struct node *head)
     }
     head = previous;
 }
-void schedule();
-
-
+  
 /*References:
 
-We used code from this website to help understand linked lists a bit better for this assignment(https://www.geeksforgeeks.org/linked-list-set-1-introduction/)
+We used this website to help with this fcfs algorithm for this assignment(https://www.geeksforgeeks.org/reverse-a-linked-list/)
 
 
 STATEMENT OF NON-PLAGIARISM
